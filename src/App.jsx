@@ -1,16 +1,18 @@
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Home from "./components/Home";
+import { ThemeProvider } from "./ThemeContext";
 
 const App = () => {
     return (
-        <div>
+        <ThemeProvider>
             <Header />
             <main className="main">
                 <Home />
+                <div></div>
             </main>
             <Footer />
-        </div>
+        </ThemeProvider>
     );
 };
 

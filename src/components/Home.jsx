@@ -1,4 +1,11 @@
+import {
+    RiArrowRightLine,
+    RiFacebookBoxFill,
+    RiInstagramFill,
+    RiTwitchFill,
+} from "@remixicon/react";
 import BackgroundImage from "../assets/img/home1.jpg";
+import HomeOverlay from "../assets/img/home2.jpg";
 
 const Home = () => {
     return (
@@ -31,21 +38,21 @@ const Home = () => {
                         target="_blank"
                         className="home__social-link"
                     >
-                        <i className="ri-facebook-box-fill"></i>
+                        <RiFacebookBoxFill className="ri-facebook-box-fill" />
                     </a>
                     <a
                         href="https://www.instagram.com/"
                         target="_blank"
                         className="home__social-link"
                     >
-                        <i className="ri-instagram-fill"></i>
+                        <RiInstagramFill className="ri-instagram-fill" />
                     </a>
                     <a
                         href="https://twitter.com/"
                         target="_blank"
                         className="home__social-link"
                     >
-                        <i className="ri-twitter-fill"></i>
+                        <RiTwitchFill className="ri-twitter-fill" />
                     </a>
                 </div>
 
@@ -58,13 +65,17 @@ const Home = () => {
                             href=""
                             className="button button--flex button--link home__info-button"
                         >
-                            More <i className="ri-arrow-right-line"></i>
+                            More{" "}
+                            <RiArrowRightLine
+                                className="ri-arrow-right-line"
+                                size={16}
+                            />
                         </a>
                     </div>
 
                     <div className="home__info-overlay">
                         <img
-                            src="assets/img/home2.jpg"
+                            src={HomeOverlay}
                             alt=""
                             className="home__info-img"
                         />

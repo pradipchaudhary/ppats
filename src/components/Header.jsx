@@ -1,4 +1,15 @@
+import {
+    RiCloseLine,
+    RiFunctionLine,
+    RiMoonLine,
+    RiSunLine,
+} from "@remixicon/react";
+import { useState } from "react";
+import { useTheme } from "../ThemeContext";
+
 const Header = () => {
+    const [isDark, setIsDark] = useState(true);
+    const { theme, toggleTheme } = useTheme();
     return (
         <header className="header" id="header">
             <nav className="nav container">
@@ -33,17 +44,26 @@ const Header = () => {
                     <div className="nav__dark">
                         {/* <!-- Theme change button --> */}
                         <span className="change-theme-name">Dark mode</span>
-                        <i
-                            className="ri-moon-line change-theme"
-                            id="theme-button"
-                        ></i>
+                        {theme == "light" ? (
+                            <RiMoonLine
+                                className="ri-moon-line change-theme"
+                                id="theme-button"
+                                onClick={() => toggleTheme("dark-theme")}
+                            />
+                        ) : (
+                            <RiSunLine
+                                className="ri-sun-line change-theme"
+                                id="theme-button"
+                                onClick={() => toggleTheme("dark-theme")}
+                            />
+                        )}
                     </div>
 
-                    <i className="ri-close-line nav__close" id="nav-close"></i>
+                    <RiCloseLine className="ri-close-line" id="nav-close" />
                 </div>
 
                 <div className="nav__toggle" id="nav-toggle">
-                    <i className="ri-function-line"></i>
+                    <RiFunctionLine className="ri-function-line" />
                 </div>
             </nav>
         </header>
