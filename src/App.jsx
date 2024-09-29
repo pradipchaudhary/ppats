@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import { ThemeProvider } from "./ThemeContext";
+import Scrollup from "./components/Scrollup";
 
 const App = () => {
     return (
@@ -25,6 +26,7 @@ const App = () => {
                 <Sponsor />
             </main>
             <Footer />
+            <Scrollup />
         </ThemeProvider>
     );
 };
