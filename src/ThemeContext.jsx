@@ -8,7 +8,7 @@ export const useTheme = () => useContext(ThemeContext);
 
 // ThemeProvider Component to wrap the app
 export const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState("light"); // default to 'light' theme
+    const [theme, setTheme] = useState("dark-theme"); // default to 'light' theme
 
     const toggleTheme = () => {
         setTheme((prevTheme) =>

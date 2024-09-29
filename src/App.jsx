@@ -1,3 +1,10 @@
+import About from "./components/About";
+import Discover from "./components/Discover";
+import Experience from "./components/Experience";
+import Video from "./components/Video";
+import Place from "./components/Place";
+import Subscribe from "./components/Subscribe";
+import Sponsor from "./components/Sponsor";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Home from "./components/Home";
@@ -9,7 +16,13 @@ const App = () => {
             <Header />
             <main className="main">
                 <Home />
-                <div></div>
+                <About />
+                <Discover />
+                <Experience />
+                <Video />
+                <Place />
+                <Subscribe />
+                <Sponsor />
             </main>
             <Footer />
         </ThemeProvider>
