@@ -1,3 +1,5 @@
+import About from "./components/About";
+import Discover from "./components/Discover";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Home from "./components/Home";
@@ -9,7 +11,8 @@ const App = () => {
             <Header />
             <main className="main">
                 <Home />
-                <div></div>
+                <About />
+                <Discover />
             </main>
             <Footer />
         </ThemeProvider>

@@ -4,14 +4,36 @@ import {
     RiMoonLine,
     RiSunLine,
 } from "@remixicon/react";
-import { useState } from "react";
 import { useTheme } from "../ThemeContext";
+import { useEffect, useState } from "react";
 
 const Header = () => {
-    const [isDark, setIsDark] = useState(true);
     const { theme, toggleTheme } = useTheme();
+    const [scrolled, setScrolled] = useState(false);
+
+    // Function to handle scroll and toggle header class
+    const handleScroll = () => {
+        if (window.scrollY >= 100) {
+            setScrolled(true);
+        } else {
+            setScrolled(false);
+        }
+    };
+    useEffect(() => {
+        // Add the scroll event listener when the component mounts
+        window.addEventListener("scroll", handleScroll);
+
+        // Cleanup the event listener when the component unmounts
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []); // The empty dependency array ensures this effect only runs on mount and unmount
+
     return (
-        <header className="header" id="header">
+        <header
+            className={scrolled ? "header scroll-header" : "header"}
+            id="header"
+        >
             <nav className="nav container">
                 <a href="#" className="nav__logo">
                     Travel
