@@ -1,15 +1,14 @@
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/effect-cube";
+import "swiper/css/pagination";
 
+// Install modules
 // Image imports
 import discover1 from "../assets/img/discover1.jpg";
 import discover2 from "../assets/img/discover2.jpg";
 import discover3 from "../assets/img/discover3.jpg";
 import discover4 from "../assets/img/discover4.jpg";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/bundle";
 
 const Discover = () => {
     return (
@@ -24,18 +23,18 @@ const Discover = () => {
                         slidesPerView={3}
                         onSlideChange={() => console.log("slide change")}
                         onSwiper={(swiper) => console.log(swiper)}
-                        effect="coverflow" // Activate coverflow effect
+                        effect="cube" // Activate coverflow effect
                         grabCursor={true} // Enables cursor grabbing
                         centeredSlides={true} // Centers the slides
                         // slidesPerView="auto" // Automatic slides per view
                         loop={true} // Enables infinite looping
                         spaceBetween={32} // Space between the slides
                         coverflowEffect={{
-                            rotate: 50, // Adjusts rotation angle
-                            stretch: 0, // Stretch the slides (set 0 for no stretch)
-                            depth: 100, // Depth of the coverflow
-                            modifier: 1, // Modifier that affects depth/scale
-                            slideShadows: true, // Slide shadow effect
+                            rotate: 50,
+                            stretch: 0,
+                            depth: 100,
+                            modifier: 1,
+                            slideShadows: true,
                         }}
                         pagination={{ clickable: true }} // Pagination controls
                         className="discover__container container"
