@@ -1,5 +1,5 @@
 import {
-    RiCloseLine,
+    // RiCloseLine,
     RiFunctionLine,
     RiMoonLine,
     RiSunLine,
@@ -70,18 +70,20 @@ const Header = () => {
                             <RiMoonLine
                                 className="ri-moon-line change-theme"
                                 id="theme-button"
+                                size={16}
                                 onClick={() => toggleTheme("dark-theme")}
                             />
                         ) : (
                             <RiSunLine
                                 className="ri-sun-line change-theme"
                                 id="theme-button"
+                                size={16}
                                 onClick={() => toggleTheme("dark-theme")}
                             />
                         )}
                     </div>
 
-                    <RiCloseLine className="ri-close-line" id="nav-close" />
+                    {/* <RiCloseLine className="ri-close-line" id="nav-close" /> */}
                 </div>
 
                 <div className="nav__toggle" id="nav-toggle">

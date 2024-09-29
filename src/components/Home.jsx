@@ -38,21 +38,27 @@ const Home = () => {
                         target="_blank"
                         className="home__social-link"
                     >
-                        <RiFacebookBoxFill className="ri-facebook-box-fill" />
+                        <RiFacebookBoxFill
+                            className="ri-facebook-box-fill"
+                            size={20}
+                        />
                     </a>
                     <a
                         href="https://www.instagram.com/"
                         target="_blank"
                         className="home__social-link"
                     >
-                        <RiInstagramFill className="ri-instagram-fill" />
+                        <RiInstagramFill
+                            className="ri-instagram-fill"
+                            size={20}
+                        />
                     </a>
                     <a
                         href="https://twitter.com/"
                         target="_blank"
                         className="home__social-link"
                     >
-                        <RiTwitchFill className="ri-twitter-fill" />
+                        <RiTwitchFill className="ri-twitter-fill" size={20} />
                     </a>
                 </div>
 
@@ -69,6 +75,7 @@ const Home = () => {
                             <RiArrowRightLine
                                 className="ri-arrow-right-line"
                                 size={16}
+                                fontWeight={700}
                             />
                         </a>
                     </div>

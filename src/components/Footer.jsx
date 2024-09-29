@@ -1,3 +1,10 @@
+import {
+    RiFacebookBoxFill,
+    RiInstagramFill,
+    RiTwitchFill,
+    RiYoutubeFill,
+} from "@remixicon/react";
+
 const Footer = () => {
     return (
         <footer className="footer section">
@@ -15,28 +22,28 @@ const Footer = () => {
                                 target="_blank"
                                 className="footer__social"
                             >
-                                <i className="ri-facebook-box-fill"></i>
+                                <RiFacebookBoxFill size={20} />
                             </a>
                             <a
                                 href="https://twitter.com/"
                                 target="_blank"
                                 className="footer__social"
                             >
-                                <i className="ri-twitter-fill"></i>
+                                <RiTwitchFill size={20} />
                             </a>
                             <a
                                 href="https://www.instagram.com/"
                                 target="_blank"
                                 className="footer__social"
                             >
-                                <i className="ri-instagram-fill"></i>
+                                <RiInstagramFill size={20} />
                             </a>
                             <a
                                 href="https://www.youtube.com/"
                                 target="_blank"
                                 className="footer__social"
                             >
-                                <i className="ri-youtube-fill"></i>
+                                <RiYoutubeFill size={20} />
                             </a>
                         </div>
                     </div>
