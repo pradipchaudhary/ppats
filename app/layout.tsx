@@ -1,8 +1,8 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Temp Mail Dashboard',
-  description: 'Temporary mail system with a clean UI',
+  title: 'Passport Profile Automation Tools',
+  description: 'Automates creating a user profile from a scanned Nepali passport image, extracts passport fields, generates an email, and optionally guides through FEIMS foreign-employment login.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
