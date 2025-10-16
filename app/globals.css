@@ -18,8 +18,7 @@
 } */
 
 /* Apply variables to body */
+/* Custom Styles */
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
+  @apply antialiased bg-white text-neutral-900 font-sans;
 }
