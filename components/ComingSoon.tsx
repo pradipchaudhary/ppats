@@ -1,28 +1,30 @@
+'use client';
+
 export default function ComingSoon() {
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-screen bg-white px-6 text-center">
+    <main className="relative flex flex-col items-center justify-center min-h-screen bg-background text-foreground text-center px-6">
       {/* TITLE */}
-      <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-        <span className="text-gray-700">Coming Soon</span>
+      <h1 className="text-5xl md:text-6xl font-bold mb-3">
+        Coming <span className="text-primary">Soon</span>
       </h1>
 
-      {/* SHORT MESSAGE */}
-      <p className="text-gray-500 text-base md:text-lg">
+      {/* MESSAGE */}
+      <p className="text-muted-foreground text-base md:text-lg mb-2">
         We’re working on something amazing.
       </p>
 
       {/* FOOTER */}
-      <footer className="absolute bottom-6 text-gray-400 text-sm">
+      <footer className="absolute bottom-6 text-muted-foreground text-sm">
         © {new Date().getFullYear()}{" "}
         <a
           href="https://github.com/pradipchaudhary"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:underline"
+          className="hover:underline hover:text-primary transition-colors"
         >
           Pradip Chaudhary
         </a>
       </footer>
-    </div>
+    </main>
   );
 }
