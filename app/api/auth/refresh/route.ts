@@ -1,5 +1,5 @@
 // app/api/auth/refresh/route.ts
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { verifyRefreshToken, signAccessToken, signRefreshToken } from "@/lib/jwt";
 import { connect } from "@/lib/mongoose";
@@ -15,7 +15,7 @@ interface JWTPayload {
   exp?: number;
 }
 
-export async function POST(req: NextRequest) {
+export async function POST() {
   try {
     // ✅ Get refresh token using Next.js 15 modern cookie API
     const cookieStore = await cookies();

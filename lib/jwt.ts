@@ -1,25 +1,60 @@
 // lib/jwt.ts
-import jwt from "jsonwebtoken";
+import jwt, { SignOptions, JwtPayload } from "jsonwebtoken";
 
-const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET!;
-const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET!;
+/**
+ * ✅ Safely load environment variables.
+ * These are only evaluated at runtime to prevent build-time errors.
+ */
+const getAccessSecret = (): string => {
+  const secret = process.env.JWT_ACCESS_SECRET;
+  if (!secret) throw new Error("Missing JWT_ACCESS_SECRET in environment variables");
+  return secret;
+};
 
-if (!ACCESS_SECRET || !REFRESH_SECRET) {
-  throw new Error("JWT secrets not set in env.");
+const getRefreshSecret = (): string => {
+  const secret = process.env.JWT_REFRESH_SECRET;
+  if (!secret) throw new Error("Missing JWT_REFRESH_SECRET in environment variables");
+  return secret;
+};
+
+/**
+ * ✅ Common JWT payload type (optional for your project)
+ */
+export interface TokenPayload extends JwtPayload {
+  id: string;
+  email: string;
 }
 
-export function signAccessToken(payload: object, options?: jwt.SignOptions) {
-  return jwt.sign(payload, ACCESS_SECRET, { expiresIn: "15m", ...(options || {}) });
+/**
+ * ✅ Sign Access Token (default: 15 minutes)
+ */
+export function signAccessToken(payload: object, options?: SignOptions): string {
+  return jwt.sign(payload, getAccessSecret(), {
+    expiresIn: "15m",
+    ...(options || {}),
+  });
 }
 
-export function signRefreshToken(payload: object, options?: jwt.SignOptions) {
-  return jwt.sign(payload, REFRESH_SECRET, { expiresIn: "7d", ...(options || {}) });
+/**
+ * ✅ Sign Refresh Token (default: 7 days)
+ */
+export function signRefreshToken(payload: object, options?: SignOptions): string {
+  return jwt.sign(payload, getRefreshSecret(), {
+    expiresIn: "7d",
+    ...(options || {}),
+  });
 }
 
-export function verifyAccessToken(token: string) {
-  return jwt.verify(token, ACCESS_SECRET);
+/**
+ * ✅ Verify Access Token
+ */
+export function verifyAccessToken<T = TokenPayload>(token: string): T {
+  return jwt.verify(token, getAccessSecret()) as T;
 }
 
-export function verifyRefreshToken(token: string) {
-  return jwt.verify(token, REFRESH_SECRET);
+/**
+ * ✅ Verify Refresh Token
+ */
+export function verifyRefreshToken<T = TokenPayload>(token: string): T {
+  return jwt.verify(token, getRefreshSecret()) as T;
 }
