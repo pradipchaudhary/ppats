@@ -1,56 +1,79 @@
 // app/api/auth/refresh/route.ts
 import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { verifyRefreshToken, signAccessToken, signRefreshToken } from "@/lib/jwt";
-import { serialize } from "cookie";
 import { connect } from "@/lib/mongoose";
 import { User } from "@/models/User";
 
 const ACCESS_COOKIE_NAME = "access_token";
 const REFRESH_COOKIE_NAME = "refresh_token";
 
-function cookieOptions({ httpOnly = true, secure = process.env.NODE_ENV === "production", maxAge }: any) {
-  return {
-    httpOnly,
-    secure,
-    sameSite: "lax",
-    path: "/",
-    maxAge
-  };
+interface JWTPayload {
+  id: string;
+  email: string;
+  iat?: number;
+  exp?: number;
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const cookie = req.headers.get("cookie") || "";
-    const cookies = Object.fromEntries(cookie.split(";").map(c => {
-      const [k, ...v] = c.split("=");
-      return [k?.trim(), decodeURIComponent(v?.join("="))];
-    }));
-    const refresh = cookies[REFRESH_COOKIE_NAME];
-    if (!refresh) return NextResponse.json({ error: "No refresh token" }, { status: 401 });
+    // ✅ Get refresh token using Next.js 15 modern cookie API
+    const cookieStore = await cookies();
+    const refresh = cookieStore.get(REFRESH_COOKIE_NAME)?.value;
 
-    // verify refresh token
-    let payload: any;
+    if (!refresh) {
+      return NextResponse.json({ error: "No refresh token" }, { status: 401 });
+    }
+
+    // ✅ Verify refresh token
+    let payload: JWTPayload | null = null;
     try {
-      payload = verifyRefreshToken(refresh) as any;
-    } catch (err) {
+      payload = verifyRefreshToken(refresh) as JWTPayload;
+    } catch {
       return NextResponse.json({ error: "Invalid refresh token" }, { status: 401 });
+    }
+
+    if (!payload?.id) {
+      return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
     }
 
     await connect();
     const user = await User.findById(payload.id).lean();
-    if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
 
-    const newAccess = signAccessToken({ id: user._id, email: user.email });
-    const newRefresh = signRefreshToken({ id: user._id, email: user.email });
+    // ✅ Generate new tokens
+    const newAccessToken = signAccessToken({ id: user._id, email: user.email });
+    const newRefreshToken = signRefreshToken({ id: user._id, email: user.email });
 
-    const res = NextResponse.json({ user: { id: user._id, email: user.email, name: user.name } });
-    res.headers.set("Set-Cookie", [
-      serialize(ACCESS_COOKIE_NAME, newAccess, cookieOptions({ maxAge: 60 * 15 })),
-      serialize(REFRESH_COOKIE_NAME, newRefresh, cookieOptions({ maxAge: 60 * 60 * 24 * 7 }))
-    ].join(", "));
-    return res;
-  } catch (err) {
-    console.error(err);
+    // ✅ Set new cookies safely
+    cookieStore.set({
+      name: ACCESS_COOKIE_NAME,
+      value: newAccessToken,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 15, // 15 minutes
+    });
+
+    cookieStore.set({
+      name: REFRESH_COOKIE_NAME,
+      value: newRefreshToken,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    });
+
+    return NextResponse.json({
+      message: "Token refreshed",
+      user: { id: user._id, email: user.email, name: user.name },
+    });
+  } catch (error) {
+    console.error("Refresh token error:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
