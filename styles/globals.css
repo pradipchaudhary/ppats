@@ -14,6 +14,9 @@
   --color-surface: #ffffff;
   --color-surface-alt: #f9fafb;
 
+  --spacing: 4px;
+  /* base spacing */
+
   /* Focus Ring */
   --color-focus: rgba(0, 0, 0, 0.08);
 
@@ -60,6 +63,12 @@ body {
   color: var(--color-text);
   font-family: var(--font-family);
   @apply antialiased text-[15px] tracking-tight;
+}
+
+
+.w-60 {
+  width: calc(var(--spacing) * 60);
+  /* 4px * 64 = 256px */
 }
 
 /* ==============================

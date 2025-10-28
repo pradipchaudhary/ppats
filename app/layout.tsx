@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import { UserProvider } from '@/components/UserContext';
 
 export const metadata = {
   title: 'Passport Profile Automation Tools',
@@ -9,7 +10,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        {children}
+        <UserProvider>
+          {children}
+        </UserProvider>
       </body>
     </html>
   );

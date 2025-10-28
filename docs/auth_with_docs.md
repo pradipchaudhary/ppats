@@ -474,7 +474,7 @@ export async function POST() {
 
 ---
 
-# 9) Middleware — `middleware.ts`
+refreshsecretkey456# 9) Middleware — `middleware.ts`
 
 **Purpose:** Protect UI routes server-side (redirect to `/login` if no valid access token).
 

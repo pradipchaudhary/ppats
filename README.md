@@ -1,7 +1,7 @@
 
 
 
-# Passport Profile Automation Tools
+# Passport Automation Tools
 
 A Next.js 15 application for automating Nepali passport data extraction and profile creation.
 

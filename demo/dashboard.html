@@ -1,0 +1,292 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Temp Mail · Inbox</title>
+  <meta name="description" content="Temporary mail system with a clean UI">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="antialiased bg-white text-neutral-900 [font-feature-settings:'cv02','cv03','cv04','cv11']"
+  style="font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';">
+  <!-- App Shell -->
+  <div class="min-h-screen">
+    <!-- Top Bar -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-neutral-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px- lg:px-8">
+        <div class="h-16 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <button id="sidebarToggle"
+              class="lg:hidden inline-flex items-center justify-center rounded-md border border-neutral-200 px-2.5 py-2 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 transition">
+              <i data-lucide="menu" class="w-5 h-5"></i>
+            </button>
+            <a href="#" class="flex items-center gap-2">
+              <div
+                class="h-7 w-7 rounded-md bg-neutral-900 text-white grid place-items-center tracking-tight text-[11px] font-semibold">
+                T</div>
+              <div class="text-[15px] font-medium tracking-tight text-neutral-900">TempMail</div>
+              <span class="text-neutral-400">/</span>
+              <div class="text-[15px] font-normal text-neutral-600">Inbox</div>
+            </a>
+          </div>
+          <div class="flex-1 max-w-xl hidden md:flex items-center">
+            <div class="relative w-full">
+              <i data-lucide="search"
+                class="w-4 h-4 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+              <input type="text" placeholder="Search mail…"
+                class="w-full rounded-md border border-neutral-200 bg-white pl-9 pr-3 py-2.5 text-[14px] placeholder-neutral-400 focus:border-neutral-300 focus:ring-2 focus:ring-neutral-200 outline-none">
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="topCopyBtn"
+              class="hidden md:inline-flex items-center gap-2 rounded-md border border-neutral-200 bg-white px-3 py-2 text-[13px] text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 transition">
+              <i data-lucide="copy" class="w-4 h-4"></i>
+              Copy
+            </button>
+            <button id="topNewBtn"
+              class="hidden sm:inline-flex items-center gap-2 rounded-md border border-neutral-200 bg-white px-3 py-2 text-[13px] text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 transition">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              New Address
+            </button>
+            <button id="topRefreshBtn"
+              class="inline-flex items-center gap-2 rounded-md bg-neutral-900 text-white px-3 py-2 text-[13px] hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 transition">
+              <i data-lucide="refresh-ccw" class="w-4 h-4"></i>
+              Refresh
+            </button>
+            <div class="h-8 w-[1px] bg-neutral-200 mx-1.5"></div>
+            <button
+              class="rounded-full overflow-hidden border border-neutral-200 hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 transition">
+              <img
+                src="https://images.unsplash.com/photo-1546456073-6712f79251bb?q=80&amp;w=80&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;h=80"
+                alt="User" class="h-8 w-8 object-cover">
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="flex max-w-7xl mx-auto">
+      <!-- Sidebar -->
+      <aside id="sidebar"
+        class="fixed lg:sticky top-16 z-30 -left-80 lg:left-0 h-[calc(100vh-4rem)] w-64 bg-white border-r border-neutral-200 transition-all">
+        <nav class="h-full flex flex-col">
+          <div class="px-4 py-3">
+            <div class="text-[12px] uppercase tracking-wide text-neutral-500 mb-2">Mailbox</div>
+            <div class="group flex items-center justify-between rounded-md border border-neutral-200 px-3 py-2.5">
+              <div class="flex items-center gap-2.5">
+                <i data-lucide="at-sign" class="w-4 h-4 text-neutral-700"></i>
+                <div id="sidebarAddr" class="text-[13px] text-neutral-800 truncate max-w-[9rem]">
+                  welcome.wave@tempmail.dev</div>
+              </div>
+              <button id="sidebarCopy" class="rounded p-1 hover:bg-neutral-50">
+                <i data-lucide="copy" class="w-4 h-4 text-neutral-400 group-hover:text-neutral-600"></i>
+              </button>
+            </div>
+          </div>
+          <div class="px-2">
+            <ul class="space-y-1">
+              <li>
+                <a href="#"
+                  class="flex items-center gap-3 rounded-md px-3 py-2 text-[14px] bg-neutral-50 text-neutral-900 border border-neutral-200">
+                  <i data-lucide="inbox" class="w-4 h-4"></i>
+                  Inbox
+                  <span id="inboxCount"
+                    class="ml-auto text-[12px] bg-neutral-100 text-neutral-700 border border-neutral-200 rounded px-1.5 py-0.5">6</span>
+                </a>
+              </li>
+              <li>
+                <a href="#"
+                  class="flex items-center gap-3 rounded-md px-3 py-2 text-[14px] text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 transition">
+                  <i data-lucide="star" class="w-4 h-4"></i>
+                  Starred
+                </a>
+              </li>
+              <li>
+                <a href="#"
+                  class="flex items-center gap-3 rounded-md px-3 py-2 text-[14px] text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 transition">
+                  <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                  Spam
+                  <span
+                    class="ml-auto text-[12px] bg-neutral-100 text-neutral-700 border border-neutral-200 rounded px-1.5 py-0.5">2</span>
+                </a>
+              </li>
+              <li>
+                <a href="#"
+                  class="flex items-center gap-3 rounded-md px-3 py-2 text-[14px] text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 transition">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                  Trash
+                </a>
+              </li>
+              <li class="pt-1.5">
+                <a href="#"
+                  class="flex items-center gap-3 rounded-md px-3 py-2 text-[14px] text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 transition">
+                  <i data-lucide="settings" class="w-4 h-4"></i>
+                  Settings
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-auto px-4 py-3 border-t border-neutral-200">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2 text-[12px] text-neutral-600">
+                <i data-lucide="clock" class="w-4 h-4"></i>
+                <span>Auto-refresh in <span id="refreshCountdown">30</span>s</span>
+              </div>
+              <button id="sidebarRefresh"
+                class="rounded-md border border-neutral-200 px-2 py-1 text-[12px] text-neutral-700 hover:bg-neutral-50">Refresh</button>
+            </div>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main -->
+      <main class="fixed top-16 left-0 right-0 bottom-0 overflow-auto flex-1 lg:ml-72">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <!-- Page heading -->
+          <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-6">
+            <div>
+              <h1 class="text-2xl tracking-tight font-semibold text-neutral-900">Temporary Mail</h1>
+              <p class="text-[14px] text-neutral-600 mt-1">Use a disposable email to receive messages. No sign-up
+                required.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="newAddrBtn"
+                class="inline-flex items-center gap-2 rounded-md border border-neutral-200 bg-white px-3 py-2 text-[13px] text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 transition">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                New Address
+              </button>
+              <button id="copyAddrBtn"
+                class="inline-flex items-center gap-2 rounded-md border border-neutral-200 bg-white px-3 py-2 text-[13px] text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 transition">
+                <i data-lucide="copy" class="w-4 h-4"></i>
+                Copy
+              </button>
+              <button id="refreshBtn"
+                class="inline-flex items-center gap-2 rounded-md bg-neutral-900 text-white px-3 py-2 text-[13px] hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 transition">
+                <i data-lucide="refresh-ccw" class="w-4 h-4"></i>
+                Refresh
+              </button>
+            </div>
+          </div>
+
+          <!-- Address card -->
+          <section class="rounded-xl border border-neutral-200 bg-white p-4 mb-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <div class="rounded-md border border-neutral-200 px-3 py-2.5 bg-white flex items-center gap-2">
+                  <i data-lucide="at-sign" class="w-4 h-4 text-neutral-600"></i>
+                  <div class="text-[14px] font-medium text-neutral-900 tracking-tight" id="activeAddress">
+                    welcome.wave@tempmail.dev</div>
+                </div>
+                <span id="copiedBadge"
+                  class="hidden text-[12px] rounded px-1.5 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-100">Copied</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="text-[12px] text-neutral-500">Domain</div>
+                <div
+                  class="rounded-md border border-neutral-200 px-2.5 py-1.5 text-[12px] text-neutral-700 bg-neutral-50">
+                  tempmail.dev</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Mail layout -->
+          <section class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <!-- List -->
+            <div class="rounded-xl border border-neutral-200 bg-white overflow-hidden lg:col-span-1">
+              <div class="flex items-center justify-between p-3 border-b border-neutral-200">
+                <div class="text-[14px] font-medium text-neutral-900 tracking-tight">Inbox</div>
+                <div class="flex items-center gap-1.5">
+                  <button id="markAllRead"
+                    class="rounded-md border border-neutral-200 px-2.5 py-1.5 text-[12px] text-neutral-700 hover:bg-neutral-50">Mark
+                    all read</button>
+                  <button id="purgeBtn"
+                    class="rounded-md border border-neutral-200 px-2.5 py-1.5 text-[12px] text-neutral-700 hover:bg-neutral-50">Purge</button>
+                </div>
+              </div>
+              <div id="messageList" class="divide-y divide-neutral-200 max-h-[60vh] overflow-auto">
+                <!-- Item 1 -->
+                <button class="w-full text-left p-3 hover:bg-neutral-50 transition focus:outline-none group" data-id="1"
+                  data-from-name="Figma" data-from-email="no-reply@figma.com" data-subject="Your security code"
+                  data-time="10:24 AM"
+                  data-body="Use the code 824193 to continue. If you didn’t request this, please ignore this message.">
+                  <div class="flex items-start gap-3">
+                    <img
+                      src="https://images.unsplash.com/photo-1541537103745-ea3429c65dc7?q=80&amp;w=100&amp;auto=format&amp;fit=crop"
+                      alt="" class="h-8 w-8 rounded object-cover">
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center gap-2">
+                        <div class="truncate text-[13px] text-neutral-700">Figma</div>
+                        <span
+                          class="text-[11px] rounded px-1 py-0.5 bg-neutral-100 border border-neutral-200 text-neutral-600">Code</span>
+                        <span class="ml-auto text-[12px] text-neutral-500">10:24 AM</span>
+                      </div>
+                      <div class="mt-0.5 flex items-center gap-2">
+                        <div class="truncate text-[14px] font-medium text-neutral-900">Your security code</div>
+                      </div>
+                      <div class="truncate text-[12px] text-neutral-600">Use the code 824193 to continue…</div>
+                    </div>
+                    <span class="h-2 w-2 rounded-full bg-emerald-500 mt-1" title="Unread"></span>
+                  </div>
+                </button>
+
+                <!-- Item 2 (fixed truncated markup) -->
+                <button class="w-full text-left p-3 hover:bg-neutral-50 transition focus:outline-none group" data-id="2"
+                  data-from-name="GitService" data-from-email="noreply@gitservice.dev"
+                  data-subject="Verify your email address" data-time="9:02 AM"
+                  data-body="Click the link to verify your email address. If you didn’t request this, ignore this email.">
+                  <div class="flex items-start gap-3">
+                    <img
+                      src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&amp;w=100&amp;auto=format&amp;fit=crop"
+                      alt="" class="h-8 w-8 rounded object-cover">
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center gap-2">
+                        <div class="truncate text-[13px] text-neutral-700">GitService</div>
+                        <span
+                          class="text-[11px] rounded px-1 py-0.5 bg-neutral-100 border border-neutral-200 text-neutral-600">Verify</span>
+                        <span class="ml-auto text-[12px] text-neutral-500">9:02 AM</span>
+                      </div>
+                      <div class="mt-0.5 flex items-center gap-2">
+                        <div class="truncate text-[14px] font-medium text-neutral-900">Verify your email address</div>
+                      </div>
+                      <div class="truncate text-[12px] text-neutral-600">Click the link to verify your email…</div>
+                    </div>
+                    <span class="h-2 w-2 rounded-full bg-emerald-500 mt-1" title="Unread"></span>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <!-- You can add preview/detail panes here in future iterations -->
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Initialize icons at 1.5 stroke width
+      if (window.lucide && typeof lucide.createIcons === 'function') {
+        lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
+      }
+
+      // Sidebar toggle (mobile)
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      const sidebar = document.getElementById('sidebar');
+      if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', () => {
+          sidebar.classList.toggle('-left-80');
+          sidebar.classList.toggle('left-0');
+        });
+      }
+    });
+  </script>
+
+</body>
+
+</html>

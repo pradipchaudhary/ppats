@@ -5,6 +5,12 @@ import jwt, { SignOptions, JwtPayload } from "jsonwebtoken";
  * ✅ Safely load environment variables.
  * These are only evaluated at runtime to prevent build-time errors.
  */
+
+const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET!;
+const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET!;
+
+
+
 const getAccessSecret = (): string => {
   const secret = process.env.JWT_ACCESS_SECRET;
   if (!secret) throw new Error("Missing JWT_ACCESS_SECRET in environment variables");
