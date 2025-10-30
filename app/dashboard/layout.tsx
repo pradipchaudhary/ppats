@@ -39,17 +39,38 @@ export default async function DashboardLayout({ children }: { children: React.Re
     return (
       <ErrorBoundary>
         <UserProvider>
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <div className="flex-1 flex">
-              <Sidebar activeAddress={data.activeAddress} domain={data.domain} inboxCount={data.inboxCount} />
-              <div className="flex-1 lg:pl-64">
-                <div className="max-w-7xl mx-auto">
-                  <ErrorBoundary>
-                    {children}
-                  </ErrorBoundary>
-                </div>
+          <div className="flex min-h-screen bg-gray-50 text-gray-900">
+            {/* ===== SIDEBAR ===== */}
+            <aside className="fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-200 shadow-sm flex flex-col">
+              {/* Sidebar Logo */}
+              <div className="flex items-center justify-center h-16 border-b border-gray-100">
+                <img
+                  src="/logo-light.png"
+                  alt="App Logo"
+                  className="h-8 w-auto"
+                />
               </div>
+
+              {/* Sidebar Content */}
+              <div className="flex-1 overflow-y-auto">
+                {/* <Sidebar /> */}
+                <Sidebar activeAddress={data.activeAddress} domain={data.domain} inboxCount={data.inboxCount} />
+              </div>
+            </aside>
+
+            {/* ===== MAIN AREA ===== */}
+            <div className="flex flex-col flex-1 ml-64">
+              {/* Fixed Header */}
+              <header className="fixed top-0 left-64 right-0 h-16 bg-white border-b border-gray-200 z-20 flex items-center justify-between px-6 shadow-sm">
+                <Header />
+              </header>
+
+              {/* Main Content */}
+              <main className="flex-1 pt-16 overflow-y-auto">
+                <div className="">
+                  <ErrorBoundary>{children}</ErrorBoundary>
+                </div>
+              </main>
             </div>
           </div>
         </UserProvider>

@@ -1,30 +1,52 @@
-﻿
-"use client";
-import { useUser } from '@/components/UserContext';
+﻿"use client";
+import { useUser } from "@/components/UserContext";
+import React from "react";
 
-function StatsCard({ title, value, description, icon }: {
+/* ────────────────────────────── */
+/* 📊 STATS CARD */
+/* ────────────────────────────── */
+function StatsCard({
+  title,
+  value,
+  description,
+  icon,
+}: {
   title: string;
   value: string | number;
   description: string;
   icon: string;
 }) {
   return (
-    <div className="bg-white dark:bg-[#161616] rounded-xl p-6 border border-neutral-200 dark:border-neutral-800">
-      <div className="flex items-center gap-4">
-        <div className="p-3 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-lg">
-          <span className="text-xl">{icon}</span>
+    <div className="group bg-white dark:bg-[#161616] rounded-2xl p-6 border border-neutral-200 dark:border-neutral-800 hover:border-emerald-500/50 hover:shadow-lg dark:hover:border-emerald-500/40 transition-all duration-300">
+      <div className="flex items-start gap-4">
+        <div className="p-3 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-xl text-xl">
+          {icon}
         </div>
-        <div>
-          <h3 className="text-sm font-medium text-neutral-600 dark:text-neutral-400">{title}</h3>
-          <p className="text-2xl font-semibold mt-1 text-neutral-900 dark:text-white">{value}</p>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">{description}</p>
+        <div className="flex flex-col">
+          <h3 className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+            {title}
+          </h3>
+          <p className="text-3xl font-bold mt-1 text-neutral-900 dark:text-white">
+            {value}
+          </p>
+          <p className="text-sm text-neutral-500 dark:text-neutral-500 mt-1">
+            {description}
+          </p>
         </div>
       </div>
     </div>
   );
 }
 
-function QuickAction({ title, description, icon, onClick }: {
+/* ────────────────────────────── */
+/* ⚡ QUICK ACTION */
+/* ────────────────────────────── */
+function QuickAction({
+  title,
+  description,
+  icon,
+  onClick,
+}: {
   title: string;
   description: string;
   icon: string;
@@ -33,58 +55,82 @@ function QuickAction({ title, description, icon, onClick }: {
   return (
     <button
       onClick={onClick}
-      className="flex items-center gap-4 p-4 bg-white dark:bg-[#161616] rounded-xl border border-neutral-200 dark:border-neutral-800 hover:border-emerald-500 dark:hover:border-emerald-500/50 transition-colors duration-200 w-full text-left"
+      className="flex items-center gap-4 p-4 w-full bg-white dark:bg-[#161616] rounded-2xl border border-neutral-200 dark:border-neutral-800 hover:border-emerald-500/50 hover:shadow-lg dark:hover:border-emerald-500/40 transition-all duration-300 text-left group"
     >
-      <div className="p-3 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-lg">
-        <span className="text-xl">{icon}</span>
+      <div className="p-3 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-xl text-lg">
+        {icon}
       </div>
       <div>
-        <h3 className="font-medium text-neutral-900 dark:text-white">{title}</h3>
-        <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">{description}</p>
+        <h3 className="font-semibold text-neutral-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+          {title}
+        </h3>
+        <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
+          {description}
+        </p>
       </div>
     </button>
   );
 }
 
-function RecentActivity({ time, action, status }: {
+/* ────────────────────────────── */
+/* 🕒 RECENT ACTIVITY */
+/* ────────────────────────────── */
+function RecentActivity({
+  time,
+  action,
+  status,
+}: {
   time: string;
   action: string;
-  status: 'success' | 'pending' | 'error';
+  status: "success" | "pending" | "error";
 }) {
   const statusClasses = {
-    success: 'text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/30',
-    pending: 'text-amber-600 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/30',
-    error: 'text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/30'
+    success:
+      "text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/30",
+    pending:
+      "text-amber-600 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/30",
+    error: "text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/30",
   };
 
   return (
-    <div className="flex items-center gap-4 py-3">
-      <div className="w-24 text-sm text-neutral-600 dark:text-neutral-400">{time}</div>
-      <div className="flex-1 text-neutral-900 dark:text-white">{action}</div>
-      <div className={`px-2.5 py-1 rounded-full text-xs font-medium ${statusClasses[status]}`}>
-        {status.charAt(0).toUpperCase() + status.slice(1)}
+    <div className="flex items-center justify-between py-3 border-b border-neutral-100 dark:border-neutral-800 last:border-0">
+      <div className="flex items-center gap-4">
+        <span className="text-sm text-neutral-500 dark:text-neutral-400 w-28 shrink-0">
+          {time}
+        </span>
+        <span className="text-neutral-900 dark:text-white text-sm sm:text-base">
+          {action}
+        </span>
       </div>
+      <span
+        className={`px-2.5 py-1 rounded-full text-xs font-medium ${statusClasses[status]}`}
+      >
+        {status.charAt(0).toUpperCase() + status.slice(1)}
+      </span>
     </div>
   );
 }
 
+/* ────────────────────────────── */
+/* 🏠 DASHBOARD PAGE */
+/* ────────────────────────────── */
 export default function DashboardPage() {
   const { user } = useUser();
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
+    <div className="px-4 sm:px-6 lg:px-8 py-8 bg-gray-50 dark:bg-[#0d0d0d] min-h-screen transition-colors duration-300">
       {/* Welcome Section */}
-      <div className="mb-6 sm:mb-8 lg:mb-10">
-        <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white">
-          Welcome back, {user?.name || 'User'}
+      <div className="mb-10">
+        <h1 className="text-3xl font-bold text-neutral-900 dark:text-white tracking-tight">
+          Welcome back, {user?.name || "User"} 👋
         </h1>
-        <p className="text-neutral-600 dark:text-neutral-400 mt-2">
-          Here's what's happening with your passport applications
+        <p className="text-neutral-600 dark:text-neutral-400 mt-2 text-sm sm:text-base">
+          Here’s a quick summary of your passport applications.
         </p>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-6 sm:mb-8 lg:mb-10">
+      {/* Stats Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
         <StatsCard
           title="Total Applications"
           value="12"
@@ -106,11 +152,13 @@ export default function DashboardPage() {
       </div>
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Activity */}
-        <div className="lg:col-span-2 bg-white dark:bg-[#161616] rounded-xl border border-neutral-200 dark:border-neutral-800 p-4 sm:p-6 lg:p-8">
-          <h2 className="text-lg sm:text-xl font-semibold text-neutral-900 dark:text-white mb-4 sm:mb-6">Recent Activity</h2>
-          <div className="space-y-2 sm:space-y-3">
+        <div className="lg:col-span-2 bg-white dark:bg-[#161616] rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 shadow-sm hover:shadow-md transition-shadow">
+          <h2 className="text-xl font-semibold text-neutral-900 dark:text-white mb-6">
+            Recent Activity
+          </h2>
+          <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
             <RecentActivity
               time="2 hours ago"
               action="Passport application submitted"
@@ -132,32 +180,34 @@ export default function DashboardPage() {
               status="success"
             />
           </div>
-          <button className="mt-6 text-sm text-emerald-600 dark:text-emerald-400 hover:underline">
+          <button className="mt-6 text-sm text-emerald-600 dark:text-emerald-400 hover:underline font-medium">
             View all activity →
           </button>
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-white dark:bg-[#161616] rounded-xl border border-neutral-200 dark:border-neutral-800 p-4 sm:p-6 lg:p-8">
-          <h2 className="text-lg sm:text-xl font-semibold text-neutral-900 dark:text-white mb-4 sm:mb-6">Quick Actions</h2>
-          <div className="space-y-3 sm:space-y-4">
+        <div className="bg-white dark:bg-[#161616] rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 shadow-sm hover:shadow-md transition-shadow">
+          <h2 className="text-xl font-semibold text-neutral-900 dark:text-white mb-6">
+            Quick Actions
+          </h2>
+          <div className="space-y-4">
             <QuickAction
               title="New Application"
               description="Start a new passport application"
               icon="➕"
-              onClick={() => console.log('New application')}
+              onClick={() => console.log("New application")}
             />
             <QuickAction
               title="Track Status"
-              description="Check existing application status"
+              description="Check your application progress"
               icon="🔍"
-              onClick={() => console.log('Track status')}
+              onClick={() => console.log("Track status")}
             />
             <QuickAction
               title="Upload Documents"
               description="Submit required documentation"
               icon="📎"
-              onClick={() => console.log('Upload documents')}
+              onClick={() => console.log("Upload documents")}
             />
           </div>
         </div>
